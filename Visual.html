@@ -1,0 +1,454 @@
+<h1> Careerbuilder information retrieval and analysis </h1><h4> Ziang Jia(zj2170), Yuan Hang Lu (yl3221) </h4><p> Job searching is a painful process for every graduate. For one, there is a vast pool of career information. Also, as a freshman in a job market, graduates run around like headless chickens. In this regard, a career information aggregator, which can show them a big picture of the job market, is of crucial importance. In a rapidly changing job market, it is beneficial to have daily and even real-time information with regard to job openings. Our project is to serve this need by writing a python script to extract most recent job information from CareerBuilder.com, and automatically generate a general overview or trend report for job searchers. <br>  <br>As an example, we traced the top 10 key words in job title and job description from career builder from November 15th to 23rd. Results are shown in a couple of interactive graphs. With simple clicks on charts, the data can be simultaneously viewed by multiple dimensions</p><!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link href="./Packages/nvd3/src/nv.d3.css" rel="stylesheet" />
+        <script src="./Packages/d3/d3.min.js"></script>
+        <script src="./Packages/nvd3/nv.d3.min.js"></script>
+    </head>
+    <body>
+        
+    
+
+<h3>Hottest Key Words in Job Title</h3>
+
+<div id="key_words_in_job_title"><svg style="width:1100px;height:400px;"></svg></div>
+
+
+    <script>
+
+
+
+        data_hottest_key_words_in_job_title=[{"key": "Top1", "values": [{"x": 1416027600001, "y": 19.763513513513516}, {"x": 1416227600001, "y": 16.25}, {"x": 1416427600001, "y": 17.04225352112676}, {"x": 1416627600001, "y": 20.998719590268884}, {"x": 1416727600001, "y": 16.584158415841586}], "yAxis": "1"}, {"key": "Top2", "values": [{"x": 1416027600001, "y": 13.429054054054054}, {"x": 1416227600001, "y": 13.750000000000002}, {"x": 1416427600001, "y": 13.239436619718308}, {"x": 1416627600001, "y": 18.053777208706787}, {"x": 1416727600001, "y": 15.594059405940595}], "yAxis": "1"}, {"key": "Top3", "values": [{"x": 1416027600001, "y": 11.570945945945946}, {"x": 1416227600001, "y": 11.25}, {"x": 1416427600001, "y": 11.408450704225352}, {"x": 1416627600001, "y": 10.627400768245838}, {"x": 1416727600001, "y": 14.19141914191419}], "yAxis": "1"}, {"key": "Top4", "values": [{"x": 1416027600001, "y": 10.557432432432433}, {"x": 1416227600001, "y": 10.000001}, {"x": 1416427600001, "y": 9.859154929577464}, {"x": 1416627600001, "y": 9.603072983354673}, {"x": 1416727600001, "y": 12.458745874587459}], "yAxis": "1"}, {"key": "Top5", "values": [{"x": 1416027600001, "y": 10.050675675675675}, {"x": 1416227600001, "y": 8.75}, {"x": 1416427600001, "y": 8.87323943661972}, {"x": 1416627600001, "y": 7.810499359795134}, {"x": 1416727600001, "y": 9.735973597359736}], "yAxis": "1"}, {"key": "Top6", "values": [{"x": 1416027600001, "y": 7.85472972972973}, {"x": 1416227600001, "y": 8.75}, {"x": 1416427600001, "y": 8.732394366197182}, {"x": 1416627600001, "y": 7.554417413572343}, {"x": 1416727600001, "y": 7.508250825082509}], "yAxis": "1"}, {"key": "Top7", "values": [{"x": 1416027600001, "y": 7.263513513513513}, {"x": 1416227600001, "y": 8.75}, {"x": 1416427600001, "y": 8.450704225352112}, {"x": 1416627600001, "y": 7.042253521126761}, {"x": 1416727600001, "y": 7.2607260726072615}], "yAxis": "1"}, {"key": "Top8", "values": [{"x": 1416027600001, "y": 7.179054054054054}, {"x": 1416227600001, "y": 7.5}, {"x": 1416427600001, "y": 8.028169014084508}, {"x": 1416627600001, "y": 6.9142125480153656}, {"x": 1416727600001, "y": 5.9405940594059405}], "yAxis": "1"}, {"key": "Top9", "values": [{"x": 1416027600001, "y": 6.672297297297297}, {"x": 1416227600001, "y": 7.5}, {"x": 1416427600001, "y": 7.464788732394366}, {"x": 1416627600001, "y": 5.8898847631242}, {"x": 1416727600001, "y": 5.858085808580858}], "yAxis": "1"}, {"key": "Top10", "values": [{"x": 1416027600001, "y": 5.658783783783783}, {"x": 1416227600001, "y": 7.5}, {"x": 1416427600001, "y": 6.901408450704226}, {"x": 1416627600001, "y": 5.505761843790013}, {"x": 1416727600001, "y": 4.867986798679868}], "yAxis": "1"}];
+
+    nv.addGraph(function() {
+        var chart = nv.models.multiBarChart();
+
+        chart.margin({top: 30, right: 60, bottom: 20, left: 60});
+
+        var datum = data_hottest_key_words_in_job_title;
+
+
+        chart.stacked(true);
+
+            chart.yAxis
+                .tickFormat(d3.format(',.2f'));
+            chart.xAxis
+                .tickFormat(function(d) { return d3.time.format('%d-%b-%Y')(new Date(parseInt(d))) }
+);
+
+                chart.tooltipContent(function(key, y, e, graph) {
+                    var x = d3.time.format("%d %b %Y")(new Date(parseInt(graph.point.x)));
+                    var y = String(graph.point.y);
+                                        if(key == 'Top1'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+                    if(key == 'Top2'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+                    if(key == 'Top3'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+                    if(key == 'Top4'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+                    if(key == 'Top5'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+                    if(key == 'Top6'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+                    if(key == 'Top7'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+                    if(key == 'Top8'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+                    if(key == 'Top9'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+                    if(key == 'Top10'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+
+                    tooltip_str = '<center><b>'+key+'</b></center>' + y + ' on ' + x;
+                    return tooltip_str;
+                });
+
+      chart.showLegend(true);
+
+
+
+        
+
+
+        d3.select('#hottest_key_words_in_job_title svg')
+            .datum(datum)
+            .transition().duration(500)
+            .attr('width', 1100)
+            .attr('height', 400)
+            .call(chart);
+
+
+    });
+
+
+
+
+    </script>
+
+    </body>
+</html><p>Title key word rank: <br> 1st: ['service', 'manage', 'manage', 'manage', 'demonstrate'],<br> 2nd: ['manage', 'sale', 'sale', 'sale', 'sale'] , <br>3rd: ['entry', 'part', 'account', 'nurse', 'product'], <br> 4th: ['custom', 'assist', 'nurse', 'assist', 'costco'], <br> 5th: ['sale', 'technician', 'service', 'retail', 'manage'], <br> 6th: ['member', 'engineer', 'engineer', 'engineer', 'retail'], <br> 7th: ['food', 'nurse', 'represent', 'analyst', 'consult'],<br> 8th: ['crew', 'time', 'specialist', 'account', 'entry'],<br> 9th: ['nurse', 'specialist', 'assist', 'driver', 'account'],<br> 10th: ['assist', 'automotatic', 'analyst', 'specialist', 'market'] </p><p>From the above graph, we can see that the hottest jobs are: manager, salesman, assistant, nurse, engineer and analyst.</p>
+    
+
+<h3>Hottest Key Words in Job Title and Description</h3>
+
+<div id="key_words_in_job_title_and_description"><svg style="width:1100px;height:400px;"></svg></div>
+
+
+    <script>
+
+
+
+        data_hottest_key_words_in_job_title_and_description=[{"key": "Top1", "values": [{"x": 1416027600001, "y": 17.189962419687234}, {"x": 1416227600001, "y": 17.094017094017094}, {"x": 1416427600001, "y": 13.928293063133282}, {"x": 1416627600001, "y": 16.11441307578009}, {"x": 1416727600001, "y": 14.891686514687535}], "yAxis": "1"}, {"key": "Top2", "values": [{"x": 1416027600001, "y": 14.480543096132864}, {"x": 1416227600001, "y": 13.597513597513597}, {"x": 1416427600001, "y": 12.182385035074045}, {"x": 1416627600001, "y": 11.136701337295692}, {"x": 1416727600001, "y": 14.704548032210502}], "yAxis": "1"}, {"key": "Top3", "values": [{"x": 1416027600001, "y": 11.334707237240877}, {"x": 1416227600001, "y": 10.8003108003108}, {"x": 1416427600001, "y": 11.402961808261885}, {"x": 1416627600001, "y": 10.586924219910847}, {"x": 1416727600001, "y": 11.93716683679256}], "yAxis": "1"}, {"key": "Top4", "values": [{"x": 1416027600001, "y": 10.092132379682386}, {"x": 1416227600001, "y": 9.557109557109557}, {"x": 1416427600001, "y": 9.688230709275135}, {"x": 1416627600001, "y": 10.081723625557206}, {"x": 1416727600001, "y": 10.905069751616196}], "yAxis": "1"}, {"key": "Top5", "values": [{"x": 1416027600001, "y": 9.219299309007152}, {"x": 1416227600001, "y": 8.780108780108781}, {"x": 1416427600001, "y": 9.586905689789555}, {"x": 1416627600001, "y": 9.301634472511145}, {"x": 1416727600001, "y": 10.11681977997051}], "yAxis": "1"}, {"key": "Top6", "values": [{"x": 1416027600001, "y": 7.940356406837193}, {"x": 1416227600001, "y": 8.313908313908314}, {"x": 1416427600001, "y": 9.150428682774747}, {"x": 1416627600001, "y": 9.13075780089153}, {"x": 1416727600001, "y": 7.927866621299762}], "yAxis": "1"}, {"key": "Top7", "values": [{"x": 1416027600001, "y": 7.819129591465631}, {"x": 1416227600001, "y": 8.158508158508159}, {"x": 1416427600001, "y": 8.862042088854247}, {"x": 1416627600001, "y": 8.789004457652302}, {"x": 1416727600001, "y": 7.786095043665646}], "yAxis": "1"}, {"key": "Top8", "values": [{"x": 1416027600001, "y": 7.503939871499575}, {"x": 1416227600001, "y": 8.003108003108004}, {"x": 1416427600001, "y": 8.604832424006235}, {"x": 1416627600001, "y": 8.380386329866269}, {"x": 1416727600001, "y": 7.735057275717364}], "yAxis": "1"}, {"key": "Top9", "values": [{"x": 1416027600001, "y": 7.352406352285125}, {"x": 1416227600001, "y": 7.925407925407925}, {"x": 1416427600001, "y": 8.316445830085737}, {"x": 1416627600001, "y": 8.306092124814263}, {"x": 1416727600001, "y": 7.394805489395486}], "yAxis": "1"}, {"key": "Top10", "values": [{"x": 1416027600001, "y": 7.067523336161958}, {"x": 1416227600001, "y": 7.770007770007769}, {"x": 1416427600001, "y": 8.277474668745128}, {"x": 1416627600001, "y": 8.172362555720653}, {"x": 1416727600001, "y": 6.600884654644437}], "yAxis": "1"}];
+
+    nv.addGraph(function() {
+        var chart = nv.models.multiBarChart();
+
+        chart.margin({top: 30, right: 60, bottom: 20, left: 60});
+
+        var datum = data_hottest_key_words_in_job_title_and_description;
+
+
+        chart.stacked(true);
+
+            chart.yAxis
+                .tickFormat(d3.format(',.2f'));
+            chart.xAxis
+                .tickFormat(function(d) { return d3.time.format('%d-%b-%Y')(new Date(parseInt(d))) }
+);
+
+                chart.tooltipContent(function(key, y, e, graph) {
+                    var x = d3.time.format("%d %b %Y")(new Date(parseInt(graph.point.x)));
+                    var y = String(graph.point.y);
+                                        if(key == 'Top1'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+                    if(key == 'Top2'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+                    if(key == 'Top3'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+                    if(key == 'Top4'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+                    if(key == 'Top5'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+                    if(key == 'Top6'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+                    if(key == 'Top7'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+                    if(key == 'Top8'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+                    if(key == 'Top9'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+                    if(key == 'Top10'){
+                        var y =  String(graph.point.y)  + ' percent';
+                    }
+
+                    tooltip_str = '<center><b>'+key+'</b></center>' + y + ' on ' + x;
+                    return tooltip_str;
+                });
+
+      chart.showLegend(true);
+
+
+
+        
+
+
+        d3.select('#hottest_key_words_in_job_title_and_description svg')
+            .datum(datum)
+            .transition().duration(500)
+            .attr('width', 1100)
+            .attr('height', 400)
+            .call(chart);
+
+
+    });
+
+
+
+
+    </script>
+<p>All key word rank: <br>1st: ['service', 'manage', 'manage', 'manage', 'sale'], <br> 2nd: ['custom', 'work', 'work', 'work', 'custom'],<br>3rd: ['manage', 'service', 'service', 'service', 'product'], <br>4th: ['work', 'detail', 'custom', 'provide', 'service'], <br>5th: ['experiment', 'provide', 'experiment', 'response', 'work'],<br>6th: ['time', 'custom', 'require', 'custom', 'time'],<br>7th: ['sale', 'include', 'detail', 'sale', 'companies'],<br>8th: ['provid', 'require', 'provide', 'detail', 'manage'],<br>9th: ['require', 'companies', 'develop', 'develop', 'experiment'],<br>10th: ['detail', 'develop', 'response', 'experiment', 'detail']</p><p>Interestingly the hightest appeared key words from Job titles and Job descriptions are slightly different, we can see that the hottest job key words are: management, work, customer, service, sales, experienced, provider.</p><h3>Closer look at Top 10 Key Words in Job Title</h3><p>Following pie charts provides a closer look at Top 10 Key Words in Job Title</p>
+    <div id="hottest_key_words_in_job_title_for_11_15"><svg style="width:1000px;height:350px;"></svg></div>
+
+
+    <script>
+
+
+
+    data_hottest_key_words_in_job_title_for_11_15=[{"key": "Serie 1", "values": [{"label": "service", "value": 19.763513513513516}, {"label": "manage", "value": 13.429054054054054}, {"label": "entry", "value": 11.570945945945946}, {"label": "custom", "value": 10.557432432432433}, {"label": "sale", "value": 10.050675675675675}, {"label": "member", "value": 7.85472972972973}, {"label": "food", "value": 7.263513513513513}, {"label": "crew", "value": 7.179054054054054}, {"label": "nurse", "value": 6.672297297297297}]}];
+
+    nv.addGraph(function() {
+        var chart = nv.models.pieChart();
+        chart.margin({top: 30, right: 60, bottom: 20, left: 60});
+        var datum = data_hottest_key_words_in_job_title_for_11_15[0].values;
+
+    chart.tooltipContent(function(key, y, e, graph) {
+          var x = String(key);
+              var y =  String(y)  + ' %';
+
+              tooltip_str = '<center><b>'+x+'</b></center>' + y;
+              return tooltip_str;
+              });
+        chart.showLabels(true);
+
+            chart.donut(false);
+
+    chart.showLegend(true);
+
+
+
+
+        chart
+            .x(function(d) { return d.label })
+            .y(function(d) { return d.value });
+
+        chart.width(1000);
+
+        chart.height(350);
+
+
+            d3.select('#hottest_key_words_in_job_title_for_11_15 svg')
+            .datum(datum)
+            .transition().duration(500)
+            .attr('width', 1000)
+            .attr('height', 350)
+            .call(chart);
+
+
+        });
+
+
+
+    </script>
+
+    <div id="hottest_key_words_in_job_title_for_11_17"><svg style="width:1000px;height:350px;"></svg></div>
+
+
+    <script>
+
+
+
+    data_hottest_key_words_in_job_title_for_11_17=[{"key": "Serie 1", "values": [{"label": "manage", "value": 16.25}, {"label": "sale", "value": 13.750000000000002}, {"label": "part", "value": 11.25}, {"label": "assist", "value": 10.0}, {"label": "nurse", "value": 8.75}, {"label": "technician", "value": 8.75}, {"label": "engineer", "value": 8.75}, {"label": "specialist", "value": 7.5}, {"label": "time", "value": 7.5}]}];
+
+    nv.addGraph(function() {
+        var chart = nv.models.pieChart();
+        chart.margin({top: 30, right: 60, bottom: 20, left: 60});
+        var datum = data_hottest_key_words_in_job_title_for_11_17[0].values;
+
+    chart.tooltipContent(function(key, y, e, graph) {
+          var x = String(key);
+              var y =  String(y)  + ' %';
+
+              tooltip_str = '<center><b>'+x+'</b></center>' + y;
+              return tooltip_str;
+              });
+        chart.showLabels(true);
+
+            chart.donut(false);
+
+    chart.showLegend(true);
+
+
+
+
+        chart
+            .x(function(d) { return d.label })
+            .y(function(d) { return d.value });
+
+        chart.width(1000);
+
+        chart.height(350);
+
+
+            d3.select('#hottest_key_words_in_job_title_for_11_17 svg')
+            .datum(datum)
+            .transition().duration(500)
+            .attr('width', 1000)
+            .attr('height', 350)
+            .call(chart);
+
+
+        });
+
+
+
+    </script>
+
+    <div id="hottest_key_words_in_job_title_for_11_19"><svg style="width:1000px;height:350px;"></svg></div>
+
+
+    <script>
+
+
+
+    data_hottest_key_words_in_job_title_for_11_19=[{"key": "Serie 1", "values": [{"label": "manage", "value": 17.04225352112676}, {"label": "sale", "value": 13.239436619718308}, {"label": "account", "value": 11.408450704225352}, {"label": "nurse", "value": 9.859154929577464}, {"label": "service", "value": 8.87323943661972}, {"label": "engineer", "value": 8.732394366197182}, {"label": "represent", "value": 8.450704225352112}, {"label": "specialist", "value": 8.028169014084508}, {"label": "assist", "value": 7.464788732394366}]}];
+
+    nv.addGraph(function() {
+        var chart = nv.models.pieChart();
+        chart.margin({top: 30, right: 60, bottom: 20, left: 60});
+        var datum = data_hottest_key_words_in_job_title_for_11_19[0].values;
+
+    chart.tooltipContent(function(key, y, e, graph) {
+          var x = String(key);
+              var y =  String(y)  + ' %';
+
+              tooltip_str = '<center><b>'+x+'</b></center>' + y;
+              return tooltip_str;
+              });
+        chart.showLabels(true);
+
+            chart.donut(false);
+
+    chart.showLegend(true);
+
+
+
+
+        chart
+            .x(function(d) { return d.label })
+            .y(function(d) { return d.value });
+
+        chart.width(1000);
+
+        chart.height(350);
+
+
+            d3.select('#hottest_key_words_in_job_title_for_11_19 svg')
+            .datum(datum)
+            .transition().duration(500)
+            .attr('width', 1000)
+            .attr('height', 350)
+            .call(chart);
+
+
+        });
+
+
+
+    </script>
+
+    <div id="top_10_key_words_in_job_title_for_11_21"><svg style="width:1000px;height:350px;"></svg></div>
+
+
+    <script>
+
+
+
+    data_top_10_key_words_in_job_title_for_11_21=[{"key": "Serie 1", "values": [{"label": "manage", "value": 20.998719590268884}, {"label": "sale", "value": 18.053777208706787}, {"label": "nurse", "value": 10.627400768245838}, {"label": "assist", "value": 9.603072983354673}, {"label": "retail", "value": 7.810499359795134}, {"label": "engineer", "value": 7.554417413572343}, {"label": "analyst", "value": 7.042253521126761}, {"label": "account", "value": 6.9142125480153656}, {"label": "driver", "value": 5.8898847631242}]}];
+
+    nv.addGraph(function() {
+        var chart = nv.models.pieChart();
+        chart.margin({top: 30, right: 60, bottom: 20, left: 60});
+        var datum = data_top_10_key_words_in_job_title_for_11_21[0].values;
+
+    chart.tooltipContent(function(key, y, e, graph) {
+          var x = String(key);
+              var y =  String(y)  + ' %';
+
+              tooltip_str = '<center><b>'+x+'</b></center>' + y;
+              return tooltip_str;
+              });
+        chart.showLabels(true);
+
+            chart.donut(false);
+
+    chart.showLegend(true);
+
+
+
+
+        chart
+            .x(function(d) { return d.label })
+            .y(function(d) { return d.value });
+
+        chart.width(1000);
+
+        chart.height(350);
+
+
+            d3.select('#top_10_key_words_in_job_title_for_11_21 svg')
+            .datum(datum)
+            .transition().duration(500)
+            .attr('width', 1000)
+            .attr('height', 350)
+            .call(chart);
+
+
+        });
+
+
+
+    </script>
+
+    <div id="top_10_key_words_in_job_title_for_11_23"><svg style="width:1000px;height:350px;"></svg></div>
+
+
+    <script>
+
+
+
+    data_top_10_key_words_in_job_title_for_11_23=[{"key": "Serie 1", "values": [{"label": "demonstrate", "value": 16.584158415841586}, {"label": "sale", "value": 15.594059405940595}, {"label": "product", "value": 14.19141914191419}, {"label": "costco", "value": 12.458745874587459}, {"label": "manage", "value": 9.735973597359736}, {"label": "retail", "value": 7.508250825082509}, {"label": "consult", "value": 7.2607260726072615}, {"label": "entry", "value": 5.9405940594059405}, {"label": "account", "value": 5.858085808580858}]}];
+
+    nv.addGraph(function() {
+        var chart = nv.models.pieChart();
+        chart.margin({top: 30, right: 60, bottom: 20, left: 60});
+        var datum = data_top_10_key_words_in_job_title_for_11_23[0].values;
+
+    chart.tooltipContent(function(key, y, e, graph) {
+          var x = String(key);
+              var y =  String(y)  + ' %';
+
+              tooltip_str = '<center><b>'+x+'</b></center>' + y;
+              return tooltip_str;
+              });
+        chart.showLabels(true);
+
+            chart.donut(false);
+
+    chart.showLegend(true);
+
+
+
+
+        chart
+            .x(function(d) { return d.label })
+            .y(function(d) { return d.value });
+
+        chart.width(1000);
+
+        chart.height(350);
+
+
+            d3.select('#top_10_key_words_in_job_title_for_11_23 svg')
+            .datum(datum)
+            .transition().duration(500)
+            .attr('width', 1000)
+            .attr('height', 350)
+            .call(chart);
+
+
+        });
+
+
+
+    </script>
